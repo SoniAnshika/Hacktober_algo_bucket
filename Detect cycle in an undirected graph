@@ -1,0 +1,41 @@
+class Solution {
+  public:
+    // Function to detect cycle in an undirected graph.
+   bool isCycleBFS(int scr,unordered_map<int,bool> &visited, vector<int> adj[]){
+        unordered_map<int,int> parent;
+        parent[scr]=-1;
+        visited[scr]=1;
+        queue<int>q;
+        q.push(scr);
+        while(!q.empty()){
+            int front=q.front();
+            q.pop();
+            for(auto neigh:adj[front]){
+                if(visited[neigh]==1 && neigh!=parent[front]){
+                    return true;
+                }
+                else if(!visited[neigh]){
+                    q.push(neigh);
+                    parent[neigh]=front;
+                    visited[neigh]=1;
+                }
+            }
+            }
+            return false;
+        }
+
+    bool isCycle(int V, vector<int> adj[]) {
+        // Code here
+        unordered_map<int,bool> visited;
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                bool ans=isCycleBFS(i,visited,adj);
+                if(ans==1){
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
+};
